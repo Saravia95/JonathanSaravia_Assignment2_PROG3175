@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "JonathanSaravia_Assignment1_CLI/1.0.0": {
+        "runtime": {
+          "JonathanSaravia_Assignment1_CLI.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "JonathanSaravia_Assignment1_CLI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

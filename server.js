@@ -4,8 +4,8 @@ const sqlite3 = require("sqlite3");
 const path = require("path");
 
 const app = express();
-const port = 3001;
-const dbPath = path.resolve(__dirname, "database", "/database/greetings.db");
+const port = 3000;
+const dbPath = path.resolve(__dirname, "database", "greetings.db");
 
 app.use(express.json());
 // app.set("views", __dirname + "/views");

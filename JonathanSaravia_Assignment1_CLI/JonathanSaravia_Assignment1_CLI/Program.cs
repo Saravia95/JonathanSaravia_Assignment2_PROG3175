@@ -9,7 +9,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        string baseUrl = "http://localhost:3000/api";
+        string baseUrl = "https://jonathan-saravia-assignment2-prog-3175.vercel.app:3000/api";
 
         using HttpClient client = new HttpClient();
 

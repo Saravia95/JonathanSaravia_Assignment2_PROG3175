@@ -1,8 +1,12 @@
 const express = require("express");
-//const db = require("./db");
-const app = express();
-const port = 3000;
+const sqlite = require("sqlite");
+const sqlite3 = require("sqlite3");
+const path = require("path");
 
+const app = express();
+const PORT = 3000;
+
+app.use(express.json());
 let db;
 (async () => {
   db = await sqlite.open({
@@ -23,8 +27,8 @@ let db;
 })();
 
 app.set("views", __dirname + "/views");
+console.log(__dirname);
 app.use(express.static(__dirname + "/public"));
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Jonathan Saravia");

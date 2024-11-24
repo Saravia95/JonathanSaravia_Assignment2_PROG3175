@@ -4,7 +4,7 @@ const sqlite3 = require("sqlite3");
 const path = require("path");
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 app.use(express.json());
 let db;
@@ -16,7 +16,7 @@ let db;
 
   // Create a 'users' table if it doesn't exist
   await db.exec(`
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS greetings (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       timeOfDay TEXT,
       language TEXT,

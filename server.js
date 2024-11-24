@@ -1,13 +1,17 @@
 const express = require("express");
 const db = require("./db");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080;
 
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));
 
 // require("pg"); // explicitly require the "pg" module
 // const Sequelize = require("sequelize");
+
+app.get("/", (req, res) => {
+  res.send("Jonathan Saravia");
+});
 
 app.post("/api/greet", (req, res) => {
   const { timeOfDay, language, tone } = req.body;

@@ -5,6 +5,7 @@ const path = require("path");
 
 const app = express();
 const port = 3001;
+const dbPath = path.resolve(__dirname, "database", "/database/greetings.db");
 
 app.use(express.json());
 // app.set("views", __dirname + "/views");
@@ -12,8 +13,6 @@ app.use(express.json());
 
 let db;
 (async () => {
-  const dbPath = path.resolve(__dirname, "database", "greetings.db");
-
   db = await sqlite.open({
     filename: dbPath,
     driver: sqlite3.Database,

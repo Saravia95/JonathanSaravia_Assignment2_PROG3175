@@ -10,7 +10,7 @@ app.use(express.json());
 let db;
 (async () => {
   db = await sqlite.open({
-    filename: "./greetings.db",
+    filename: "./database/greetings.db",
     driver: sqlite3.Database,
   });
 

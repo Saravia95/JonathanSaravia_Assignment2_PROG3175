@@ -7,6 +7,9 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
+app.set("views", __dirname + "/views");
+app.use(express.static(__dirname + "/public"));
+
 let db;
 (async () => {
   db = await sqlite.open({
@@ -26,18 +29,14 @@ let db;
   `);
 })();
 
-app.set("views", __dirname + "/views");
-console.log(__dirname);
-app.use(express.static(__dirname + "/public"));
-
-app.get("/", (req, res) => {
-  res.send("Jonathan Saravia");
+app.get("/", async (req, res) => {
+  await res.send("Jonathan Saravia");
 });
 
-app.post("/api/greet", (req, res) => {
+app.post("/api/greet", async (req, res) => {
   const { timeOfDay, language, tone } = req.body;
   const greetingTone = tone || "Formal";
-  db.get(
+  await db.get(
     `SELECT greetingMessage FROM greetings WHERE timeOfDay = ? AND language = ? AND tone = ?`,
     [timeOfDay, language, greetingTone],
     (err, row) => {
@@ -52,15 +51,15 @@ app.post("/api/greet", (req, res) => {
   );
 });
 
-app.get("/api/timesOfDay", (req, res) => {
-  db.all(`SELECT DISTINCT timeOfDay FROM greetings`, [], (err, rows) => {
+app.get("/api/timesOfDay", async (req, res) => {
+  await db.all(`SELECT DISTINCT timeOfDay FROM greetings`, [], (err, rows) => {
     if (err) res.status(500).json({ error: "Database error" });
     else res.json(rows.map((row) => row.timeOfDay));
   });
 });
 
-app.get("/api/languages", (req, res) => {
-  db.all(`SELECT DISTINCT language FROM greetings`, [], (err, rows) => {
+app.get("/api/languages", async (req, res) => {
+  await db.all(`SELECT DISTINCT language FROM greetings`, [], (err, rows) => {
     if (err) res.status(500).json({ error: "Database error" });
     else res.json(rows.map((row) => row.language));
   });

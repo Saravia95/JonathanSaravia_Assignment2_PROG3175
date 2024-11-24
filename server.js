@@ -11,6 +11,14 @@ app.use(express.json());
 // app.set("views", __dirname + "/views");
 // app.use(express.static(__dirname + "/public"));
 
+const greetingsData = [
+  ["Morning", "English", "Good Morning!", "Formal"],
+  ["Afternoon", "English", "Good Afternoon!", "Formal"],
+  ["Evening", "English", "Good Evening!", "Casual"],
+  ["Morning", "French", "Bonjour!", "Formal"],
+  ["Afternoon", "Spanish", "Buenas tardes!", "Casual"],
+];
+
 let db;
 (async () => {
   db = await sqlite.open({
@@ -27,6 +35,17 @@ let db;
       tone TEXT
     )
   `);
+
+  const insertStatement = `
+    INSERT INTO greetings (timeOfDay, language, greetingMessage, tone) 
+    VALUES (?, ?, ?, ?)
+  `;
+
+  for (const row of greetingsData) {
+    await db.run(insertStatement, row);
+  }
+
+  console.log("Database seeded successfully.");
 })();
 
 app.get("/", async (req, res) => {

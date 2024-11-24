@@ -3,7 +3,11 @@ const db = require("./db");
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+app.set("views", __dirname + "/views");
+app.use(express.static(__dirname + "/public"));
+
+// require("pg"); // explicitly require the "pg" module
+// const Sequelize = require("sequelize");
 
 app.post("/api/greet", (req, res) => {
   const { timeOfDay, language, tone } = req.body;
@@ -40,4 +44,5 @@ app.get("/api/languages", (req, res) => {
 app.listen(port, () => {
   console.log(`Server now running at http://localhost:${port}`);
 });
+
 module.exports = app;

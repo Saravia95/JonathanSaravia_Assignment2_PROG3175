@@ -1,7 +1,26 @@
 const express = require("express");
-const db = require("./db");
+//const db = require("./db");
 const app = express();
 const port = 3000;
+
+let db;
+(async () => {
+  db = await sqlite.open({
+    filename: "./greetings.db",
+    driver: sqlite3.Database,
+  });
+
+  // Create a 'users' table if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      timeOfDay TEXT,
+      language TEXT,
+      greetingMessage TEXT,
+      tone TEXT
+    )
+  `);
+})();
 
 app.set("views", __dirname + "/views");
 app.use(express.static(__dirname + "/public"));

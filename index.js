@@ -37,8 +37,7 @@ app.get("/api/languages", (req, res) => {
   });
 });
 
+app.listen(port, () => {
+  console.log(`Server now running at http://localhost:${port}`);
+});
 module.exports = app;
-
-// app.listen(port, () => {
-//   console.log(`Server now running at http://localhost:${port}`);
-// });

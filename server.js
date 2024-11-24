@@ -12,11 +12,12 @@ app.use(express.json());
 
 let db;
 (async () => {
+  const dbPath = path.resolve(__dirname, "database", "greetings.db");
+
   db = await sqlite.open({
-    filename: "/database/greetings.db",
+    filename: dbPath,
     driver: sqlite3.Database,
   });
-
   // Create a 'users' table if it doesn't exist
   await db.exec(`
     CREATE TABLE IF NOT EXISTS greetings (

@@ -13,7 +13,7 @@ app.use(express.static(__dirname + "/public"));
 let db;
 (async () => {
   db = await sqlite.open({
-    filename: "./database/greetings.db",
+    filename: "/database/greetings.db",
     driver: sqlite3.Database,
   });
 

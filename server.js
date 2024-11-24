@@ -26,26 +26,26 @@ let db;
     driver: sqlite3.Database,
   });
   // Create a 'users' table if it doesn't exist
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS greetings (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      timeOfDay TEXT,
-      language TEXT,
-      greetingMessage TEXT,
-      tone TEXT
-    )
-  `);
+  // await db.exec(`
+  //   CREATE TABLE IF NOT EXISTS greetings (
+  //     id INTEGER PRIMARY KEY AUTOINCREMENT,
+  //     timeOfDay TEXT,
+  //     language TEXT,
+  //     greetingMessage TEXT,
+  //     tone TEXT
+  //   )
+  // `);
 
-  const insertStatement = `
-    INSERT INTO greetings (timeOfDay, language, greetingMessage, tone) 
-    VALUES (?, ?, ?, ?)
-  `;
+  // const insertStatement = `
+  //   INSERT INTO greetings (timeOfDay, language, greetingMessage, tone)
+  //   VALUES (?, ?, ?, ?)
+  // `;
 
-  for (const row of greetingsData) {
-    await db.run(insertStatement, row);
-  }
+  // for (const row of greetingsData) {
+  //   await db.run(insertStatement, row);
+  // }
 
-  console.log("Database seeded successfully.");
+  // console.log("Database seeded successfully.");
 })();
 
 app.get("/", async (req, res) => {

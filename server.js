@@ -7,8 +7,8 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-app.set("views", __dirname + "/views");
-app.use(express.static(__dirname + "/public"));
+// app.set("views", __dirname + "/views");
+// app.use(express.static(__dirname + "/public"));
 
 let db;
 (async () => {

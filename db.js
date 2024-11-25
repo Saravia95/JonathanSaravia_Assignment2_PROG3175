@@ -1,8 +1,13 @@
 const sqlite3 = require("sqlite3").verbose();
+import { createClient } from "@supabase/supabase-js";
 
-const db = new sqlite3.Database("/greetings.db", (err) => {
-  if (err) console.error("Database opening error:", err);
-});
+const supabase = createClient(
+  "https://knwvycfxqygrfrjolaca.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtud3Z5Y2Z4cXlncmZyam9sYWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1NjE4NTMsImV4cCI6MjA0ODEzNzg1M30.We7NYavXlsVwZNjSALS54oSDHjr7NlPYM1-PDaZuUP4"
+);
+
+const { data, error } = await supabase.from("greetings").select();
+const db = data;
 
 db.serialize(() => {
   db.run(`

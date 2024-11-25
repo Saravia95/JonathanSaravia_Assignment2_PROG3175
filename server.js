@@ -2,86 +2,60 @@ const express = require("express");
 const sqlite = require("sqlite");
 const sqlite3 = require("sqlite3");
 const path = require("path");
-
+require("pg"); // explicitly require the "pg" module
+const Sequelize = require("sequelize");
 const app = express();
 const port = 3000;
-const dbPath = path.resolve(__dirname, "database", "greetings.db");
+const dbPath = path.resolve(__dirname, "greetings.db");
+//const db = require("./db.js");
+const { createClient } = require("@supabase/supabase-js");
+
+const supabase = createClient(
+  "https://knwvycfxqygrfrjolaca.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtud3Z5Y2Z4cXlncmZyam9sYWNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzI1NjE4NTMsImV4cCI6MjA0ODEzNzg1M30.We7NYavXlsVwZNjSALS54oSDHjr7NlPYM1-PDaZuUP4"
+);
 
 app.use(express.json());
+
 // app.set("views", __dirname + "/views");
 // app.use(express.static(__dirname + "/public"));
-
-const greetingsData = [
-  ["Morning", "English", "Good Morning!", "Formal"],
-  ["Afternoon", "English", "Good Afternoon!", "Formal"],
-  ["Evening", "English", "Good Evening!", "Casual"],
-  ["Morning", "French", "Bonjour!", "Formal"],
-  ["Afternoon", "Spanish", "Buenas tardes!", "Casual"],
-];
-
-let db;
-(async () => {
-  db = await sqlite.open({
-    filename: dbPath,
-    driver: sqlite3.Database,
-  });
-  // Create a 'users' table if it doesn't exist
-  // await db.exec(`
-  //   CREATE TABLE IF NOT EXISTS greetings (
-  //     id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //     timeOfDay TEXT,
-  //     language TEXT,
-  //     greetingMessage TEXT,
-  //     tone TEXT
-  //   )
-  // `);
-
-  // const insertStatement = `
-  //   INSERT INTO greetings (timeOfDay, language, greetingMessage, tone)
-  //   VALUES (?, ?, ?, ?)
-  // `;
-
-  // for (const row of greetingsData) {
-  //   await db.run(insertStatement, row);
-  // }
-
-  // console.log("Database seeded successfully.");
-})();
 
 app.get("/", async (req, res) => {
   await res.send("Jonathan Saravia");
 });
 
-app.post("/api/greet", async (req, res) => {
+app.post("/greet", async (req, res) => {
   const { timeOfDay, language, tone } = req.body;
   const greetingTone = tone || "Formal";
-  await db.get(
-    `SELECT greetingMessage FROM greetings WHERE timeOfDay = ? AND language = ? AND tone = ?`,
-    [timeOfDay, language, greetingTone],
-    (err, row) => {
-      if (err) {
-        res.status(500).json({ error: "Database error" });
-      } else if (row) {
-        res.json({ greetingMessage: row.greetingMessage });
-      } else {
-        res.status(404).json({ error: "Greeting not found" });
-      }
-    }
-  );
+
+  // Query Supabase to fetch the greeting message
+  const { data, error } = await supabase
+    .from("greetings")
+    .select("greetingMessage")
+    .eq("timeOfDay", timeOfDay)
+    .eq("language", language)
+    .eq("tone", greetingTone)
+    .single();
+
+  if (error) {
+    res.status(500).json({ error: "Database error" });
+  } else if (data) {
+    res.json({ greetingMessage: data.greetingMessage });
+  } else {
+    res.status(404).json({ error: "Greeting not found" });
+  }
 });
 
-app.get("/api/timesOfDay", async (req, res) => {
-  await db.all(`SELECT DISTINCT timeOfDay FROM greetings`, [], (err, rows) => {
-    if (err) res.status(500).json({ error: "Database error" });
-    else res.json(rows.map((row) => row.timeOfDay));
-  });
+app.get("/timesOfDay", async (req, res) => {
+  const { data, error } = await supabase.from("greetings").select("timeOfDay");
+
+  res.status(500).json(data);
 });
 
-app.get("/api/languages", async (req, res) => {
-  await db.all(`SELECT DISTINCT language FROM greetings`, [], (err, rows) => {
-    if (err) res.status(500).json({ error: "Database error" });
-    else res.json(rows.map((row) => row.language));
-  });
+app.get("/languages", async (req, res) => {
+  const { data, error } = await supabase.from("greetings").select("language");
+
+  res.status(500).json(data);
 });
 
 app.listen(port, () => {

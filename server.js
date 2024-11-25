@@ -47,7 +47,7 @@ app.post("/greet", async (req, res) => {
 });
 
 app.get("/timeofday", async (req, res) => {
-  const { data, error } = await supabase.from("greetings").select("timeOfDay");
+  const { data, error } = await supabase.from("greetings").select("timeofday");
 
   res.json(data);
 });

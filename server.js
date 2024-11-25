@@ -31,7 +31,7 @@ app.post("/greet", async (req, res) => {
   // Query Supabase to fetch the greeting message
   const { data, error } = await supabase
     .from("greetings")
-    .select("greetingMessage")
+    .select("greetingmessage")
     .eq("timeofday", timeOfDay)
     .eq("language", language)
     .eq("tone", greetingTone)

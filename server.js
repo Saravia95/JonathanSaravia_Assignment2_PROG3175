@@ -46,16 +46,16 @@ app.post("/greet", async (req, res) => {
   }
 });
 
-app.get("/timesOfDay", async (req, res) => {
+app.get("/timeofday", async (req, res) => {
   const { data, error } = await supabase.from("greetings").select("timeOfDay");
 
-  res.status(500).json(data);
+  res.json(data);
 });
 
 app.get("/languages", async (req, res) => {
   const { data, error } = await supabase.from("greetings").select("language");
 
-  res.status(500).json(data);
+  res.json(data);
 });
 
 app.listen(port, () => {

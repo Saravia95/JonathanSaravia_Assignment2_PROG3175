@@ -1,10 +1,11 @@
 - **Repo**
 - **https://github.com/Saravia95/JonathanSaravia_Assignment2_PROG3175.git**
-- **POST /api/greet** 
+  **https://jonathan-saravia-assignment2-prog-3175.vercel.app/**
+- **POST /greet**
   - **Request Body**:
     ```json
     {
-      "timeOfDay": "Morning",
+      "timeofday": "Morning",
       "language": "English",
       "tone": "Formal"
     }
@@ -12,8 +13,8 @@
   - **Response**:
     ```json
     {
-      "greetingMessage": "Good Morning!"
+      "greetingmessage": "Good Morning!"
     }
     ```
-- **GET /api/timesOfDay** - Returns available `timeOfDay` values.
-- **GET /api/languages** - Returns supported languages.
+- **GET /timeofday** - Returns available `timeofday` values.
+- **GET /languages** - Returns supported languages.

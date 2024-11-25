@@ -40,20 +40,24 @@ app.post("/greet", async (req, res) => {
   if (error) {
     res.status(500).json({ error: "Database error" });
   } else if (data) {
-    res.json(data.greetingMessage);
+    res.json(data.greetingmessage);
   } else {
     res.status(404).json({ error: "Greeting not found" });
   }
 });
 
 app.get("/timeofday", async (req, res) => {
-  const { data, error } = await supabase.from("greetings").select("timeofday");
+  const { data, error } = await supabase
+    .from("greetings")
+    .select("timeofday", { distinct: true });
 
   res.json(data.map((row) => row.timeofday));
 });
 
 app.get("/languages", async (req, res) => {
-  const { data, error } = await supabase.from("greetings").select("language");
+  const { data, error } = await supabase
+    .from("greetings")
+    .select("language", { distinct: true });
 
   res.json(data.map((row) => row.language));
 });

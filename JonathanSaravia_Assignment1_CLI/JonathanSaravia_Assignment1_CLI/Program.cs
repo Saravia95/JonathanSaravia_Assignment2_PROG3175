@@ -100,9 +100,7 @@ class Program
         // Get the response content as a string
         string responseBody = await response.Content.ReadAsStringAsync();
 
-        // Deserialize the response (assuming it's a JSON object with a 'message' field)
-        var responseObject = JsonSerializer.Deserialize<GreetingResponse>(responseBody);
-        return responseObject?.Message ?? "No greeting available";
+        return responseBody;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,7 +10,7 @@ class Program
 {
     static async Task Main(string[] args)
     {
-        string baseUrl = "https://jonathan-saravia-assignment2-prog-3175.vercel.app:3000/api";
+        string baseUrl = "https://jonathan-saravia-assignment2-prog-3175.vercel.app";
 
         using HttpClient client = new HttpClient();
 
@@ -50,7 +51,7 @@ class Program
 
     static async Task<string[]> FetchTimesOfDay(HttpClient client, string baseUrl)
     {
-        var response = await client.GetAsync($"{baseUrl}/timesOfDay");
+        var response = await client.GetAsync($"{baseUrl}/timeofday");
         response.EnsureSuccessStatusCode();
 
         string responseBody = await response.Content.ReadAsStringAsync();

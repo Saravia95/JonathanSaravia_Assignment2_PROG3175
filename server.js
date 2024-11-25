@@ -49,13 +49,13 @@ app.post("/greet", async (req, res) => {
 app.get("/timeofday", async (req, res) => {
   const { data, error } = await supabase.from("greetings").select("timeofday");
 
-  res.json(data);
+  res.json(data.map((row) => row.timeofday));
 });
 
 app.get("/languages", async (req, res) => {
   const { data, error } = await supabase.from("greetings").select("language");
 
-  res.json(data);
+  res.json(data.map((row) => row.language));
 });
 
 app.listen(port, () => {

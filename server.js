@@ -32,7 +32,7 @@ app.post("/greet", async (req, res) => {
   const { data, error } = await supabase
     .from("greetings")
     .select("greetingMessage")
-    .eq("timeOfDay", timeOfDay)
+    .eq("timeofday", timeOfDay)
     .eq("language", language)
     .eq("tone", greetingTone)
     .single();
@@ -40,7 +40,7 @@ app.post("/greet", async (req, res) => {
   if (error) {
     res.status(500).json({ error: "Database error" });
   } else if (data) {
-    res.json({ greetingMessage: data.greetingMessage });
+    res.json(data.greetingMessage);
   } else {
     res.status(404).json({ error: "Greeting not found" });
   }

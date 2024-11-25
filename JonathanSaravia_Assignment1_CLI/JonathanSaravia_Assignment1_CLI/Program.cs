@@ -38,6 +38,11 @@ class Program
 
             string tone = Console.ReadLine() ?? "Formal";
 
+            if (tone == "")
+            {
+                tone = "Formal";
+            }
+
 
             var greeting = await FetchGreeting(client, baseUrl, selectedTimeOfDay, selectedLanguage, tone);
 
